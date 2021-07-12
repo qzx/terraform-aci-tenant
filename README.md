@@ -39,7 +39,7 @@ No modules.
 | <a name="input_bridge_domains"></a> [bridge\_domains](#input\_bridge\_domains) | Map of bridge domains to create and their associated VRFs | <pre>map(object({<br>    name    = string,<br>    routing = bool,<br>    vrf     = string,<br>  }))</pre> | `{}` | no |
 | <a name="input_epgs"></a> [epgs](#input\_epgs) | Map of EPGs to create and their associated bridge-domains | <pre>map(object({<br>    name                = string,<br>    application_profile = string,<br>    bridge_domain       = string,<br>    domains             = list(string),<br>    static_paths = list(object({<br>      path    = string,<br>      vlan_id = number,<br>    })),<br>  }))</pre> | `{}` | no |
 | <a name="input_tenant_name"></a> [tenant\_name](#input\_tenant\_name) | The name of our new Tenant managed by Terraform | `string` | n/a | yes |
-| <a name="input_vrfs"></a> [vrfs](#input\_vrfs) | The name of our new Tenant managed by Terraform | `set(string)` | `[]` | no |
+| <a name="input_vrfs"></a> [vrfs](#input\_vrfs) | List of VRFs we want our new tenant to have | `set(string)` | `[]` | no |
 
 ## Outputs
 

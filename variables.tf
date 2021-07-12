@@ -5,7 +5,7 @@ variable "tenant_name" {
 
 variable "vrfs" {
   type        = set(string)
-  description = "The name of our new Tenant managed by Terraform"
+  description = "List of VRFs we want our new tenant to have"
   default     = []
 }
 

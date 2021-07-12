@@ -4,4 +4,3 @@ output "epgs" {
     for epg in aci_application_epg.this : epg.id
   ]
 }
-

@@ -64,7 +64,6 @@ resource "aci_epg_to_domain" "this" {
   application_epg_dn = aci_application_epg.this[each.value.epg].id
   tdn                = each.value.domain
   depends_on         = [aci_application_epg.this]
-
 }
 
 
@@ -78,5 +77,4 @@ resource "aci_epg_to_static_path" "this" {
   encap              = each.value.encap
   mode               = "regular"
   depends_on         = [aci_application_epg.this, aci_epg_to_domain.this]
-
 }

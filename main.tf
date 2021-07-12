@@ -6,6 +6,8 @@
  * 
  * # Example
  *
+ * ## Note: Keys in bridge_domains and epgs maps are the names of the respective BD or EPG
+ * 
  * ```hcl
  * module "aci_tenant" {
  *   for_each = local.aci_tenant
@@ -15,12 +17,10 @@
  *   vrfs                 = ["MY_VRF1", "MY_VRF2"]
  *   bridge_domains       = {
  *     BD1 = {
- *       name    = "MY_BD1"
  *       routing = true
  *       vrf     = "MY_VRF1"
  *     },
  *     BD2 = {
- *       name    = "BD2"
  *       routing = false
  *       vrf     = "MY_VRF2"
  *     }
@@ -28,14 +28,12 @@
  *   application_profiles = ["ONE", "TWO"]
  *   epgs                 = {
  *     EPG1 = {
- *       name                = "EPG1"
  *       application_profile = "ONE"
  *       bridge_domain       = "BD1"
  *       domains             = ["uni/phys-MY_PHYSICAL_DOMAIN"]
  *       static_paths        = []
  *     },
  *     EPG2 = {
- *       name                = "EPG2"
  *       application_profile = "TWO"
  *       bridge_domain       = "BD2"
  *       domains             = ["uni/phys-MY_PHYSICAL_DOMAIN"]
@@ -78,7 +76,7 @@ resource "aci_vrf" "this" {
 resource "aci_bridge_domain" "this" {
   for_each = local.bridge_domains
 
-  name                      = each.value.name
+  name                      = each.key
   tenant_dn                 = aci_tenant.this.id
   unicast_route             = each.value.route
   arp_flood                 = each.value.arp_flood
@@ -99,7 +97,7 @@ resource "aci_application_profile" "this" {
 resource "aci_application_epg" "this" {
   for_each = local.epgs
 
-  name                   = each.value.name
+  name                   = each.key
   application_profile_dn = aci_application_profile.this[each.value.application_profile].id
   relation_fv_rs_bd      = aci_bridge_domain.this[each.value.bridge_domain].id
   depends_on             = [aci_bridge_domain.this, aci_application_profile.this]

@@ -11,7 +11,6 @@ variable "vrfs" {
 
 variable "bridge_domains" {
   type = map(object({
-    name    = string,
     routing = bool,
     vrf     = string,
   }))
@@ -27,7 +26,6 @@ variable "application_profiles" {
 
 variable "epgs" {
   type = map(object({
-    name                = string,
     application_profile = string,
     bridge_domain       = string,
     domains             = list(string),
@@ -43,7 +41,6 @@ variable "epgs" {
 locals {
   bds = tomap({
     for bd_key, bd in var.bridge_domains : bd_key => {
-      name             = bd.name
       vrf              = bd.vrf
       arp_flood        = bd.routing ? "no" : "yes"
       l2_unicast_flood = bd.routing ? "proxy" : "flood"

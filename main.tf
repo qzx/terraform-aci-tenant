@@ -10,7 +10,6 @@
  * 
  * ```hcl
  * module "aci_tenant" {
- *   for_each = local.aci_tenant
  *   source   = "qzx/tenant/aci"
  *   version  = "0.1.0"
  * 

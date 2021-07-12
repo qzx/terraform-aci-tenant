@@ -9,7 +9,6 @@ Supports vmm\_domain mapping as well as physical domain and static path
 
 ```hcl
 module "aci_tenant" {
-  for_each = local.aci_tenant
   source   = "qzx/tenant/aci"
   version  = "0.1.0"
 

@@ -10,7 +10,7 @@ Supports vmm\_domain mapping as well as physical domain and static path
 ```hcl
 module "aci_tenant" {
   source   = "qzx/tenant/aci"
-  version  = "0.1.0"
+  version  = "0.1.2"
 
   tenant_name          = "MY_TENANT"
   vrfs                 = ["MY_VRF1", "MY_VRF2"]

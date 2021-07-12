@@ -11,7 +11,8 @@
  * ```hcl
  * module "aci_tenant" {
  *   for_each = local.aci_tenant
- *   source   = "github.com/qzx/terraform-module-aci-tenant"
+ *   source   = "qzx/tenant/aci"
+ *   version  = "0.1.0"
  * 
  *   tenant_name          = "MY_TENANT"
  *   vrfs                 = ["MY_VRF1", "MY_VRF2"]

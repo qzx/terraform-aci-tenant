@@ -39,12 +39,12 @@
  *       domains             = ["uni/phys-MY_PHYSICAL_DOMAIN"]
  *       static_paths        = [
  *         {
- *           encap = 100
- *           path = "topology/pod-1/protpaths-201-202/pathep-[MY_VPC_PATH_A]"
+ *           vlan_id = 100
+ *           path    = "topology/pod-1/protpaths-201-202/pathep-[MY_VPC_PATH_A]"
  *         },
  *         {
- *           encap = 100
- *           path = "topology/pod-1/protpaths-201-202/pathep-[MY_VPC_PATH_B]"
+ *           vlan_id = 100
+ *           path    = "topology/pod-1/protpaths-201-202/pathep-[MY_VPC_PATH_B]"
  *         }
  *       ]
  *     }

@@ -58,7 +58,7 @@ locals {
 }
 
 locals {
-  domains = flatten([
+  domain_list = flatten([
     for epg_key, epg in var.epgs : [
       for domain_key, domain in epg.domains : {
         domain = domain
@@ -69,7 +69,13 @@ locals {
 }
 
 locals {
-  static_paths = flatten([
+  domains = {
+    for domain in local.domains : join(".", [domain.epg, domain.domain]) => domain
+  }
+}
+
+locals {
+  static_path_list = flatten([
     for epg_key, epg in var.epgs : [
       for path in epg.static_paths : {
         path  = path.path
@@ -78,4 +84,10 @@ locals {
       }
     ]
   ])
+}
+
+locals {
+  static_paths = {
+    for path in local.static_paths : join("/", [path.path, path.encap]) => path
+  }
 }

@@ -104,9 +104,7 @@ resource "aci_application_epg" "this" {
 }
 
 resource "aci_epg_to_domain" "this" {
-  for_each = {
-    for domain in local.domains : "${domain.epg}.${domain.domain}" => domain
-  }
+  for_each = local.domains
 
   application_epg_dn = aci_application_epg.this[each.value.epg].id
   tdn                = each.value.domain
@@ -115,9 +113,7 @@ resource "aci_epg_to_domain" "this" {
 
 
 resource "aci_epg_to_static_path" "this" {
-  for_each = {
-    for path in local.static_paths : "${path.path}/${path.encap}" => path
-  }
+  for_each = local.static_paths
 
   application_epg_dn = aci_application_epg.this[each.value.epg].id
   tdn                = each.value.path

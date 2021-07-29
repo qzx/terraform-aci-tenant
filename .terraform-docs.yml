@@ -1,0 +1,33 @@
+version: '>= 0.14.0'
+
+formatter: markdown table
+
+content: |-
+  # Terraform ACI Tenant Module
+  Manages ACI Tenant
+  Location in GUI:
+  `Tenants`
+  ## Examples
+  
+  ### Minimal Tenant config
+  ```hcl
+  {{ include "./examples/minimal/main.tf" }}
+  ```
+
+  ### Tenant config with VRFs, BDs, AP, EPG and static path mapping
+  ```hcl
+  {{ include "./examples/complete/main.tf" }}
+  ```
+
+  {{ .Requirements }}
+  {{ .Providers }}
+  {{ .Inputs }}
+  {{ .Outputs }}
+  {{ .Resources }}
+
+output:
+  file: README.md
+  mode: replace
+
+sort:
+  enabled: false

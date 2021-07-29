@@ -1,12 +1,23 @@
 variable "tenant_name" {
   type        = string
   description = "The name of our new Tenant managed by Terraform"
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9_.-]{0,64}$", var.tenant_name))
+    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
+  }
 }
 
 variable "vrfs" {
   type        = set(string)
   description = "List of VRFs we want our new tenant to have"
   default     = []
+
+  validation {
+    condition = alltrue([
+      for vrf in var.vrfs : can(regex("^[a-zA-Z0-9_.-]{0,64}$", vrf))
+    ])
+    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
+  }
 }
 
 variable "bridge_domains" {
@@ -16,12 +27,26 @@ variable "bridge_domains" {
   }))
   description = "Map of bridge domains to create and their associated VRFs"
   default     = {}
+
+  validation {
+    condition = alltrue([
+      for bd, settings in var.bridge_domains : can(regex("^[a-zA-Z0-9_.-]{0,64}$", bd))
+    ])
+    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
+  }
 }
 
 variable "application_profiles" {
   type        = set(string)
   description = "List of application profiles belonging to the Tenant"
   default     = []
+
+  validation {
+    condition = alltrue([
+      for ap in var.application_profiles : can(regex("^[a-zA-Z0-9_.-]{0,64}$", ap))
+    ])
+    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
+  }
 }
 
 variable "epgs" {
@@ -36,6 +61,13 @@ variable "epgs" {
   }))
   description = "Map of EPGs to create and their associated bridge-domains"
   default     = {}
+
+  validation {
+    condition = alltrue([
+      for epg, settings in var.epgs : can(regex("^[a-zA-Z0-9_.-]{0,64}$", epg))
+    ])
+    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
+  }
 }
 
 locals {
@@ -70,7 +102,7 @@ locals {
 
 locals {
   domains = {
-    for domain in local.domains : join(".", [domain.epg, domain.domain]) => domain
+    for domain in local.domain_list : join(".", [domain.epg, domain.domain]) => domain
   }
 }
 
@@ -88,6 +120,6 @@ locals {
 
 locals {
   static_paths = {
-    for path in local.static_paths : join("/", [path.path, path.encap]) => path
+    for path in local.static_path_list : join("/", [path.path, path.encap]) => path
   }
 }

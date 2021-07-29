@@ -1,20 +1,29 @@
-# terraform-aci-tenant
+<!-- BEGIN_TF_DOCS -->
+# Terraform ACI Tenant Module
+Manages ACI Tenant
+Location in GUI:
+`Tenants`
+## Examples
 
-Terraform module to set up a ACI tenant with VRFs, BridgeDomains and EPGS
-Supports vmm\_domain mapping as well as physical domain and static path
-
-# Example
-
-## Note: Keys in bridge\_domains and epgs maps are the names of the respective BD or EPG
-
+### Minimal Tenant config
 ```hcl
 module "aci_tenant" {
-  source   = "qzx/tenant/aci"
-  version  = "0.1.2"
+  source  = "qzx/tenant/aci"
+  version = "1.0.0"
 
-  tenant_name          = "MY_TENANT"
-  vrfs                 = ["MY_VRF1", "MY_VRF2"]
-  bridge_domains       = {
+  tenant_name = "example"
+}
+```
+
+### Tenant config with VRFs, BDs, AP, EPG and static path mapping
+```hcl
+module "aci_tenant" {
+  source  = "qzx/tenant/aci"
+  version = "1.0.0"
+
+  tenant_name = "example"
+  vrfs        = ["MY_VRF1", "MY_VRF2"]
+  bridge_domains = {
     BD1 = {
       routing = true
       vrf     = "MY_VRF1"
@@ -25,7 +34,7 @@ module "aci_tenant" {
     }
   }
   application_profiles = ["ONE", "TWO"]
-  epgs                 = {
+  epgs = {
     EPG1 = {
       application_profile = "ONE"
       bridge_domain       = "BD1"
@@ -36,7 +45,7 @@ module "aci_tenant" {
       application_profile = "TWO"
       bridge_domain       = "BD2"
       domains             = ["uni/phys-MY_PHYSICAL_DOMAIN"]
-      static_paths        = [
+      static_paths = [
         {
           vlan_id = 100
           path    = "topology/pod-1/protpaths-201-202/pathep-[MY_VPC_PATH_A]"
@@ -55,18 +64,27 @@ module "aci_tenant" {
 
 | Name | Version |
 |------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
 | <a name="requirement_aci"></a> [aci](#requirement\_aci) | ~> 0.7.0 |
-
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aci"></a> [aci](#provider\_aci) | ~> 0.7.0 |
+## Inputs
 
-## Modules
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_tenant_name"></a> [tenant\_name](#input\_tenant\_name) | The name of our new Tenant managed by Terraform | `string` | n/a | yes |
+| <a name="input_vrfs"></a> [vrfs](#input\_vrfs) | List of VRFs we want our new tenant to have | `set(string)` | `[]` | no |
+| <a name="input_bridge_domains"></a> [bridge\_domains](#input\_bridge\_domains) | Map of bridge domains to create and their associated VRFs | <pre>map(object({<br>    routing = bool,<br>    vrf     = string,<br>  }))</pre> | `{}` | no |
+| <a name="input_application_profiles"></a> [application\_profiles](#input\_application\_profiles) | List of application profiles belonging to the Tenant | `set(string)` | `[]` | no |
+| <a name="input_epgs"></a> [epgs](#input\_epgs) | Map of EPGs to create and their associated bridge-domains | <pre>map(object({<br>    application_profile = string,<br>    bridge_domain       = string,<br>    domains             = list(string),<br>    static_paths = list(object({<br>      path    = string,<br>      vlan_id = number,<br>    })),<br>  }))</pre> | `{}` | no |
+## Outputs
 
-No modules.
-
+| Name | Description |
+|------|-------------|
+| <a name="output_epgs"></a> [epgs](#output\_epgs) | List of EPGs created |
 ## Resources
 
 | Name | Type |
@@ -78,19 +96,4 @@ No modules.
 | [aci_epg_to_static_path.this](https://registry.terraform.io/providers/CiscoDevNet/aci/latest/docs/resources/epg_to_static_path) | resource |
 | [aci_tenant.this](https://registry.terraform.io/providers/CiscoDevNet/aci/latest/docs/resources/tenant) | resource |
 | [aci_vrf.this](https://registry.terraform.io/providers/CiscoDevNet/aci/latest/docs/resources/vrf) | resource |
-
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_application_profiles"></a> [application\_profiles](#input\_application\_profiles) | List of application profiles belonging to the Tenant | `set(string)` | `[]` | no |
-| <a name="input_bridge_domains"></a> [bridge\_domains](#input\_bridge\_domains) | Map of bridge domains to create and their associated VRFs | <pre>map(object({<br>    routing = bool,<br>    vrf     = string,<br>  }))</pre> | `{}` | no |
-| <a name="input_epgs"></a> [epgs](#input\_epgs) | Map of EPGs to create and their associated bridge-domains | <pre>map(object({<br>    application_profile = string,<br>    bridge_domain       = string,<br>    domains             = list(string),<br>    static_paths = list(object({<br>      path    = string,<br>      vlan_id = number,<br>    })),<br>  }))</pre> | `{}` | no |
-| <a name="input_tenant_name"></a> [tenant\_name](#input\_tenant\_name) | The name of our new Tenant managed by Terraform | `string` | n/a | yes |
-| <a name="input_vrfs"></a> [vrfs](#input\_vrfs) | List of VRFs we want our new tenant to have | `set(string)` | `[]` | no |
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| <a name="output_epgs"></a> [epgs](#output\_epgs) | List of EPGs created |
+<!-- END_TF_DOCS -->

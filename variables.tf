@@ -61,6 +61,13 @@ variable "epgs" {
   }))
   description = "Map of EPGs to create and their associated bridge-domains"
   default     = {}
+
+  validation {
+    condition = alltrue([
+      for epg, settings in var.epgs : can(regex("^[a-zA-Z0-9_.-]{0,64}$", epg))
+    ])
+    error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
+  }
 }
 
 locals {

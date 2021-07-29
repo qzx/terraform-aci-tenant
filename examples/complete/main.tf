@@ -1,6 +1,6 @@
 module "aci_tenant" {
   source  = "qzx/tenant/aci"
-  version = "0.1.2"
+  version = "1.0.0"
 
   tenant_name = "example"
   vrfs        = ["MY_VRF1", "MY_VRF2"]

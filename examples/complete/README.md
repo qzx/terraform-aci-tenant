@@ -10,7 +10,7 @@ Note that this example will create resources. Resources can be destroyed with `t
 ```hcl
 module "aci_tenant" {
   source  = "qzx/tenant/aci"
-  version = "1.0.0"
+  version = "1.0.1"
 
   tenant_name = "example"
   vrfs        = ["MY_VRF1", "MY_VRF2"]

@@ -1,4 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/qzx/terraform-aci-tenant)
 # Terraform ACI Tenant Module
 Manages ACI Tenant
 Location in GUI:

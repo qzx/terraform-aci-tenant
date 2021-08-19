@@ -51,6 +51,7 @@ variable "application_profiles" {
 
 variable "epgs" {
   type = map(object({
+    name                = string,
     application_profile = string,
     bridge_domain       = string,
     domains             = list(string),

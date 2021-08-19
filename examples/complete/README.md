@@ -27,12 +27,14 @@ module "aci_tenant" {
   application_profiles = ["ONE", "TWO"]
   epgs = {
     EPG1 = {
+      name                = "EPG1"
       application_profile = "ONE"
       bridge_domain       = "BD1"
       domains             = ["uni/phys-MY_PHYSICAL_DOMAIN"]
       static_paths        = []
     },
-    EPG2 = {
+    TWO-EPG2 = {
+      name                = "EPG2"
       application_profile = "TWO"
       bridge_domain       = "BD2"
       domains             = ["uni/phys-MY_PHYSICAL_DOMAIN"]

@@ -37,12 +37,14 @@ module "aci_tenant" {
   application_profiles = ["ONE", "TWO"]
   epgs = {
     EPG1 = {
+      name                = "EPG1"
       application_profile = "ONE"
       bridge_domain       = "BD1"
       domains             = ["uni/phys-MY_PHYSICAL_DOMAIN"]
       static_paths        = []
     },
-    EPG2 = {
+    TWO-EPG2 = {
+      name                = "EPG2"
       application_profile = "TWO"
       bridge_domain       = "BD2"
       domains             = ["uni/phys-MY_PHYSICAL_DOMAIN"]
@@ -80,7 +82,7 @@ module "aci_tenant" {
 | <a name="input_vrfs"></a> [vrfs](#input\_vrfs) | List of VRFs we want our new tenant to have | `set(string)` | `[]` | no |
 | <a name="input_bridge_domains"></a> [bridge\_domains](#input\_bridge\_domains) | Map of bridge domains to create and their associated VRFs | <pre>map(object({<br>    routing = bool,<br>    vrf     = string,<br>  }))</pre> | `{}` | no |
 | <a name="input_application_profiles"></a> [application\_profiles](#input\_application\_profiles) | List of application profiles belonging to the Tenant | `set(string)` | `[]` | no |
-| <a name="input_epgs"></a> [epgs](#input\_epgs) | Map of EPGs to create and their associated bridge-domains | <pre>map(object({<br>    application_profile = string,<br>    bridge_domain       = string,<br>    domains             = list(string),<br>    static_paths = list(object({<br>      path    = string,<br>      vlan_id = number,<br>    })),<br>  }))</pre> | `{}` | no |
+| <a name="input_epgs"></a> [epgs](#input\_epgs) | Map of EPGs to create and their associated bridge-domains | <pre>map(object({<br>    name                = string,<br>    application_profile = string,<br>    bridge_domain       = string,<br>    domains             = list(string),<br>    static_paths = list(object({<br>      path    = string,<br>      vlan_id = number,<br>    })),<br>  }))</pre> | `{}` | no |
 ## Outputs
 
 | Name | Description |

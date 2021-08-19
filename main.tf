@@ -45,7 +45,7 @@ resource "aci_application_profile" "this" {
 resource "aci_application_epg" "this" {
   for_each = local.epgs
 
-  name                   = each.key
+  name                   = each.value.name
   application_profile_dn = aci_application_profile.this[each.value.application_profile].id
   relation_fv_rs_bd      = aci_bridge_domain.this[each.value.bridge_domain].id
   depends_on             = [aci_bridge_domain.this, aci_application_profile.this]

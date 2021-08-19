@@ -65,7 +65,7 @@ variable "epgs" {
 
   validation {
     condition = alltrue([
-      for epg, settings in var.epgs : can(regex("^[a-zA-Z0-9_.-]{0,64}$", epg))
+      for epg, settings in var.epgs : can(regex("^[a-zA-Z0-9_.-]{0,64}$", settings.name))
     ])
     error_message = "Allowed characters: `a`-`z`, `A`-`Z`, `0`-`9`, `_`, `.`, `-`. Maximum characters: 64."
   }

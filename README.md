@@ -88,6 +88,8 @@ module "aci_tenant" {
 | Name | Description |
 |------|-------------|
 | <a name="output_epgs"></a> [epgs](#output\_epgs) | List of EPGs created |
+| <a name="output_tenant_dn"></a> [tenant\_dn](#output\_tenant\_dn) | Name of the Tenant created |
+| <a name="output_vrfs"></a> [vrfs](#output\_vrfs) | List of VRFs created |
 ## Resources
 
 | Name | Type |

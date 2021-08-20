@@ -83,7 +83,7 @@ locals {
 }
 
 locals {
-  tenant_name          = var.tenant_name
+  name                 = var.tenant_name
   vrfs                 = var.vrfs
   bridge_domains       = local.bds
   application_profiles = var.application_profiles

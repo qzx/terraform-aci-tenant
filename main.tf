@@ -11,7 +11,7 @@
 */
 
 resource "aci_tenant" "this" {
-  name = local.tenant_name
+  name = local.name
 }
 
 resource "aci_vrf" "this" {

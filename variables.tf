@@ -22,7 +22,7 @@ variable "vrfs" {
 
 variable "bridge_domains" {
   type = map(object({
-    arp_flood = optional(string)
+    arp_flood = optional(string, null)
     routing   = bool,
     vrf       = string,
   }))

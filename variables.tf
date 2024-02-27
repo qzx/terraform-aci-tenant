@@ -22,8 +22,9 @@ variable "vrfs" {
 
 variable "bridge_domains" {
   type = map(object({
-    routing = bool,
-    vrf     = string,
+    arp_flood = optional(string)
+    routing   = bool,
+    vrf       = string,
   }))
   description = "Map of bridge domains to create and their associated VRFs"
   default     = {}
@@ -75,7 +76,7 @@ locals {
   bds = tomap({
     for bd_key, bd in var.bridge_domains : bd_key => {
       vrf              = bd.vrf
-      arp_flood        = bd.routing ? "no" : "yes"
+      arp_flood        = bd.arp_flood != null ? bd.arp_flood : bd.routing ? "no" : "yes"
       l2_unicast_flood = bd.routing ? "proxy" : "flood"
       route            = bd.routing ? "yes" : "no"
     }
